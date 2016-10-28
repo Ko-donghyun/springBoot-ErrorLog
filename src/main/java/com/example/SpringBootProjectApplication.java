@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ErrorLogTestApplication {
+public class SpringBootProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ErrorLogTestApplication.class, args);
+		SpringApplication.run(SpringBootProjectApplication.class, args);
 	}
 }
