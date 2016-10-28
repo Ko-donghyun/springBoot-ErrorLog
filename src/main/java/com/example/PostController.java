@@ -15,4 +15,11 @@ public class PostController {
     model.addAttribute("post", new Post());
     return "new";
   }
+
+  @RequestMapping(value = "/posts", method = RequestMethod.POST)
+  public String createPost(@ModelAttribute Post post, Model model) {
+    model.addAttribute("post", post);
+
+    return "show";
+  }
 }
