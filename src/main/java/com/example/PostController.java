@@ -22,6 +22,7 @@ public class PostController {
   public String createPost(@ModelAttribute Post post, Model model) {
 //    model.addAttribute("post", post);
 
+    // RestTemplate는 REST API 요청을 간단히 처리할 수 있도록 설계된 모듈이다. Spring IO 기반으로 프로젝트를 진행한다면 내부적으로 REST API를 요청할 때 매우 유용하게 사용할 수 있을 것이다.
     RestTemplate restTemplate = new RestTemplate();                            // 내부적으로 새로운 서버에 REST API 요청을 하기 위한 Rest Template 도구
     restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
