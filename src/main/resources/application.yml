@@ -1,0 +1,2 @@
+# application.properties와 같이 Spring Boot에서 자동으로 읽어와 필요한 곳에 매핑된다.
+#
