@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>YAML</title>
+</head>
+<body>
+
+  <h1>YAML</h1>
+
+  <div>
+    <div th:each="article : ${articles}">
+      <p th:text="'id: ' + ${article.id}" />
+      <p th:text="'title: ' + ${article.title}" />
+      <p th:text="'content: ' + ${article.content}" />
+      <div th:each="comment : ${article.comments}">
+        <p th:text="'&nbsp;&nbsp;comment.id: ' + ${comment.id}" />
+        <p th:text="'&nbsp;&nbsp;comment.articleId: ' + ${comment.articleId}" />
+        <p th:text="'&nbsp;&nbsp;comment.content: ' + ${comment.content}" />
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
