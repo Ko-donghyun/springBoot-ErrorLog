@@ -16,9 +16,12 @@
   - [JVM GC와 메모리 튜닝 (조대협)](http://5dol.tistory.com/183) - 2010.02.11
   - [Garbage Collection 모니터링 방법](http://d2.naver.com/helloworld/6043) - 2012.01.12
 
+ - 테스트
+  - [Spring-Test-MVC 프로젝트 소개](http://d2.naver.com/helloworld/1341) - 2011.12.22
+
  - 기타
-  - [Spring에서 REST 서비스를 위한 컨트롤러 생성과 컨트롤러 단위테스트 하기](http://blog.saltfactory.net/java/create-and-test-rest-conroller-in-spring.html) - 2015.11.23
   - [Spring에서 YAML 파일 데이터 객체에 매핑하여 로드하기](http://blog.saltfactory.net/java/load-yaml-file-in-spring.html) - 2015.11.23
+  - [Spring에서 REST 서비스를 위한 컨트롤러 생성과 컨트롤러 단위테스트 하기](http://blog.saltfactory.net/java/create-and-test-rest-conroller-in-spring.html) - 2015.11.23
   - [Spring Boot Configuration Annotation Processor not fount 문제 처리](http://www.mdoninger.de/2015/05/16/completion-for-custom-properties-in-spring-boot.html) - 2015.05.16
   - [Spring에서 REST 서비스를 위한 컨트롤러에 FORM과 파일업로드(multipart/form-data)를 함께 사용하기와 컨트롤러 테스트하기](http://blog.saltfactory.net/java/submit-multipart-form-data-and-test-in-spring.html) - 2015.11.24
 
