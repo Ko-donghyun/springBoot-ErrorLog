@@ -6,20 +6,27 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
  * 컨트롤러를 테스트하는 테스트 클래스
@@ -29,9 +36,17 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
  *
  * Spring Boot 에서는 MockMvc를 이용하여 간단하게 테스트 할 수 있다.
  * MockMvc를 이용하면 URL 요청을 GET,POST,PUT,PATCH,DELETE 와 같은 REST 형태로 요청을 테스트할 수 있다
+ *
+ * 한가지 테스트에서 중요한 점은 기존의 REST 서비스를 위해 뷰 템플릿 없는 컨트롤러 테스트를 진행할 때는 테스트 환경을 standaloneSetup() 메소드로 컨트롤러의 MockMvc를 만들어서 테스트를 진행하였다.
+ * 하지만 뷰 템플릿까지 모두 테스트를 진행하기 위해서는 컨트롤러 객체만 필요한 것이 아니라 Web Application 전체의 자원이 필요하기 때문에
+ * webAppContextSetup() 메소드로 MockMvc를 만들어서 테스트를 진행해야한다.
+ *
+ * 또한 테스트에서 Web Application 모든 설정을 가져오기 위해서 테스트 클래스 레벨에 @WebAppConfiguration 어노테이션을 추가해야하고
+ * 이것을 autowired 할 WebApplicationContext 변수를 추가 해야한다.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringBootProjectApplication.class)
+@WebAppConfiguration
 public class ArticlesControllerTest {
 
   private Logger logger = Logger.getLogger(this.getClass());
@@ -42,16 +57,50 @@ public class ArticlesControllerTest {
   private ArticlesController articlesController;
 
   @Autowired
+  WebApplicationContext wac;
+
+  @Autowired
   private ArticlesService articlesService;
 
   @Before
   public void setUp() throws Exception {
-    mockMvc = standaloneSetup(articlesController).build();
+//    mockMvc = standaloneSetup(articlesController).build();
+
+//    MockitoAnnotations.initMocks(this);
+    mockMvc = webAppContextSetup(wac).build();
   }
 
   private String jsonStringFromObject(Object object) throws JsonProcessingException {
     ObjectMapper mapper = new ObjectMapper();
     return mapper.writeValueAsString(object);
+  }
+
+  @Test
+  public void testNewArticle() throws Exception {
+    MvcResult result = mockMvc.perform(get("/articles/new"))
+      .andExpect(status().isOk())
+      .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+      .andExpect(xpath("//input[@name='title']").exists())
+      .andReturn();
+
+    assertThat(result.getResponse().getContentAsString(), containsString("New Article"));
+
+    logger.info(result.getResponse().getContentAsString());
+  }
+
+  @Test
+  public void testFileUpload() throws Exception {
+    MockMultipartFile file = new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
+
+    MvcResult result = mockMvc.perform(
+      fileUpload("/articles").file(file)
+        .param("title", "unittest title")
+        .param("content", "unittest content"))
+      .andExpect(status().isOk())
+      .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+      .andReturn();
+
+    logger.info(result.getResponse().getContentAsString());
   }
 
   @Test
