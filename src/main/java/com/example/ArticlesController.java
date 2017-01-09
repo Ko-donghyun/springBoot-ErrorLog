@@ -6,15 +6,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+// Spring 에서 컨트롤러 컴포넌트를 만들때 우리는 기본적으로 @Controller 를 사용하여 만든다.
+// 하지만, @RestController 는 간단한 객체를 JSON/XML 타입으로 반환하는 REST 서비스에 최적화된 간단한 컨트롤러라고 한다.
 @Controller
+// @RestController // 컨트롤러의 메소드에서 반환되는 객체가 뷰 페이지(text/html)가 아니라 문자열(text/plain)이 되었음
 @EnableAutoConfiguration
 public class ArticlesController {
   @Autowired
   ArticlesService articlesService;
+
+  // 뷰 템플릿을 렌더링하여 반환하라는 내용이다.
+  @RequestMapping(value = "/articles/new", method = RequestMethod.GET)
+  public String newArticle(Model model) {
+    Article article = new Article();
+    model.addAttribute("article", article);
+    return "articles/new";
+  }
+
+  // HTML 페이지에서 FORM 으로 데이터를 Submit 하면 결과로 넘겨 받은
+  // Content-Type 은 application/x-www-form-urlencoded 나 multipart/form-data 의 형태이므로 이를 JSON 으로 반환해야 함
+  // @RestController 라고 지정을하게 되면 컨트롤러를 통해 반환되는 HttpResponse 가 자동으로 JSON 으로 변환이 된다.
+  // @Controller 로 지정을 하게 되면 @ResponseBody 를 사용하여 Content-Type 을 application/json 으로 변환하여 객체를 JSON 으로 반환하면 된다.
+  @RequestMapping(value = "/articles", method = RequestMethod.POST)
+  @ResponseBody
+  public Article submit(@ModelAttribute Article article, MultipartFile file) {
+    System.out.println(file.getOriginalFilename());
+    return article;
+  }
 
   // 글 목록을 가져오는 /api/articles 처리를 위한 메소드
   @RequestMapping(value = "/api/articles", method = RequestMethod.GET)
