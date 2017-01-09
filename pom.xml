@@ -25,6 +25,7 @@
 	</properties>
 
 	<dependencies>
+		<!--Template Engines 으로 Thymeleaf 사용-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
