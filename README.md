@@ -1,4 +1,16 @@
+## 개발 환경 설정
+ - mac OS
+   - xCode 설치
+     - App Store
+   - brew 설치
+     - [Homebrew](http://brew.sh/) 참고
+   - Java 설치
+     - `brew cask install java`
+   - Maven 설치
+     - `brew install maven`
+
 ## 스프링 부트 프로젝트 내용
+ - Spring Boot를 이용한 Rest 서비스
  - iText를 이용한 PDF 파일 생성
  - 에러 로그 처리
   - Exception Error
@@ -7,6 +19,9 @@
 ## 참고 자료
  - 프로젝트 생성
   - [IntelliJ에서 SpringBoot 웹 프로젝트 생성하기](http://blog.saltfactory.net/java/creating-springboot-project-in-intellij.html) - 2015.10.29
+
+ - 템플릿 엔진
+  - [thymeleaf](http://www.thymeleaf.org)
 
  - iText를 이용한 PDF 파일 생성
   - [itextAsian은 이제 필요 없다](http://programmers.tistory.com/397) - 2010.08.25
