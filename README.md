@@ -19,7 +19,7 @@
   - Exception Error
   - Garbage Collection Log
 
-## 참고 자료dfffaasdawq
+## 참고 자료
  - Spring Boot
   - [Spring Boot Reference Guide](http://docs.spring.io/spring-boot/docs/current/reference/html/index.html)
 
