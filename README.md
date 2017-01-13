@@ -9,7 +9,7 @@
    - Maven 설치
      - `brew install maven`
 
-## 목적
+## 목적 ㅉㄷㅂㄷㅂㅂㅈㄷㅂㅈㅂㅁㅁㅁㄴㅇ
  - Spring Boot에 대해서 익숙해 질 수 있도록
 
 ## 스프링 부트 프로젝트 내용
